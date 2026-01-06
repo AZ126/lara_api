@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Transaction;
+use App\Models\Transfer;
 use App\Models\User;
+use App\Models\Wallet;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,15 +16,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::firstOrCreate(
-            ['email' => 'test@example.com'],
-            [
-                'name' => 'Test User',
-                'password' => 'password',
-                'email_verified_at' => now(),
-            ]
-        );
+        // User::factory(1000)->create();
+        // Wallet::factory(1000)->create();
+        // Transaction::factory(5000)->create();
+        Transfer::factory(5000)->create();
     }
 }
