@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $data = User::all();
+        $data = User::paginate(50);
         return response()->json([
             'status' => 'success',
             'data' => $data
@@ -29,19 +29,26 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
         ]);
 
-        $user = User::create([
+        $user =  User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        if($user){
+            $token = $user->createToken('auth_token')->plainTextToken; 
+        }
 
-        return response()->json(['user' => $user, 'token' => $token], 201);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'data' => $user,
+            'access_token' => $token,
+        ]);
     }
 
     /**
