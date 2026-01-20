@@ -9,4 +9,12 @@ class Wallet extends Model
 {
     /** @use HasFactory<\Database\Factories\WalletFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'uuid',
+        'user_id',
+        'currency',
+        'balance',
+        'status',
+    ];
 }
